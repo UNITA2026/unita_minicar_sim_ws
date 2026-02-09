@@ -1,9 +1,10 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, TimerAction
+from launch.actions import IncludeLaunchDescription, TimerAction, RegisterEventHandler
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
+from launch.event_handlers import OnProcessExit
 
 def generate_launch_description():
     
@@ -12,8 +13,29 @@ def generate_launch_description():
     
     # [주의] YOLO 모델 파일 (.pt) 경로
     workspace_model_path = os.path.join(os.getcwd(), 'lane.pt')
-
     print(f"\n[Launch] Loading YOLO model from: {workspace_model_path}\n")
+
+    obstacles = [
+        {'name': 'cone_1', 'x': 2.817826, 'y': -1.352611, 'z': 0.0},
+        {'name': 'cone_2', 'x': 1.915787, 'y': 1.855400, 'z': 0.0},
+    ]
+
+    spawn_cone_nodes = [
+        Node(
+            package='gazebo_ros',
+            executable='spawn_entity.py',
+            name=f"spawn_{obs['name']}",
+            arguments=[
+                '-entity', obs['name'],
+                '-database', 'construction_cone',
+                '-x', str(obs['x']),
+                '-y', str(obs['y']),
+                '-z', str(obs['z'])
+            ],
+            output='screen'
+        )
+        for obs in obstacles
+    ]
 
     spawn_car_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -101,6 +123,11 @@ def generate_launch_description():
 
     return LaunchDescription([
         spawn_car_launch,
+        
+        TimerAction(
+            period=2.0,
+            actions=spawn_cone_nodes
+        ),
         
         TimerAction(
             period=2.0,
