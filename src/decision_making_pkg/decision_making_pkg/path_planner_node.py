@@ -69,7 +69,7 @@ class PathPlannerNode(Node):
         y_points, x_points = zip(*sorted_points)
         
         # 몇개의 점으로 경로 계획을 하는지 확인
-        self.get_logger().info(f"Planning path with {len(y_points)} points")
+        # self.get_logger().info(f"Planning path with {len(y_points)} points")
 
         # 스플라인 보간법을 사용하여 경로 생성
         cs = CubicSpline(y_points, x_points, bc_type='natural')
