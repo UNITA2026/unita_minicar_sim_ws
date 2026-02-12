@@ -4,7 +4,7 @@
   <gui fullscreen='0'>
     <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'/>
       <camera name='user_camera'>
-        <pose>0.0 4.76977 11.5434 0 1.57079 -3.141592</pose>
+        <pose>0.150944 -0.166215 12.7135 0 1.57079 -3.14159</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

@@ -104,14 +104,14 @@
       <ray>
         <scan>
           <horizontal>
-            <samples>360</samples> 
+            <samples>156</samples> 
             <resolution>1</resolution>
-            <min_angle>-3.141592</min_angle>
-            <max_angle>3.141592</max_angle>
+            <min_angle>1.78024</min_angle>
+            <max_angle>4.50295</max_angle>
           </horizontal>
         </scan>
         <range>
-          <min>0.05</min> 
+          <min>0.03</min> 
           <max>12.0</max> 
           <resolution>0.01</resolution> 
           </range>
@@ -255,11 +255,11 @@
     <parent link="front_camera_link"/>
     <child link="front_camera_link_optical"/>
   </joint>
-  
+
   <gazebo reference="front_camera_link">
-    <sensor type="camera" name="front_camera_sensor">
+    <sensor type="camera" name="camera1">
       <update_rate>30.0</update_rate>
-      <camera name="front_camera">
+      <camera name="camera1">
         <horizontal_fov>1.0856</horizontal_fov>
         <image>
           <width>640</width>
@@ -276,20 +276,14 @@
           <stddev>0.007</stddev>
         </noise>
       </camera>
-      <plugin name="front_camera_driver" filename="libgazebo_ros_camera.so">
-        <alwaysOn>1</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>front_camera</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
-        <cameraInfoTopicName>front_camera/camera_info</cameraInfoTopicName>
-        <frameName>front_camera_link_optical</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-      </plugin>
+      <plugin name="camera1_driver" filename="libgazebo_ros_camera.so">
+      <ros>
+        <remapping>image_raw:=/camera1/image_raw</remapping>
+        <remapping>camera_info:=/camera1/camera_info</remapping>
+      </ros>
+      <frame_name>front_camera_link_optical</frame_name>
+      <hack_baseline>0.07</hack_baseline>
+    </plugin>
     </sensor>
   </gazebo>
 
@@ -312,7 +306,7 @@
   <joint name="rear_camera_joint" type="fixed">
     <parent link="chassis"/>
     <child link="rear_camera_link"/>
-    <origin xyz="-0.406 0.0 0.678" rpy="0 0.515 3.141592"/> 
+    <origin xyz="-0.406 0.0 0.678" rpy="0 0.471238 3.141592"/> 
   </joint>
   
   <link name="rear_camera_link_optical">
@@ -329,41 +323,35 @@
   </joint>
   
   <gazebo reference="rear_camera_link">
-    <sensor type="camera" name="rear_camera_sensor">
-      <update_rate>30.0</update_rate>
-      <camera name="rear_camera">
-        <horizontal_fov>1.3962634</horizontal_fov>
-        <image>
-          <width>640</width>
-          <height>480</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.03</near>
-          <far>100</far>
-        </clip>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.007</stddev>
-        </noise>
-      </camera>
-      <plugin name="rear_camera_controller" filename="libgazebo_ros_camera.so">
-        <alwaysOn>1</alwaysOn>
-        <updateRate>30</updateRate>
-        <cameraName>rear_camera</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
-        <cameraInfoTopicName>rear_camera/camera_info</cameraInfoTopicName>
-        <frameName>rear_camera_link_optical</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-      </plugin>
-    </sensor>
-  </gazebo>
+  <sensor type="camera" name="rear_camera">
+    <update_rate>30.0</update_rate>
+    <camera name="rear_camera">
+      <horizontal_fov>1.3962634</horizontal_fov>
+      <image>
+        <width>640</width>
+        <height>480</height>
+        <format>R8G8B8</format>
+      </image>
+      <clip>
+        <near>0.03</near>
+        <far>100</far>
+      </clip>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.007</stddev>
+      </noise>
+    </camera>
+    <plugin name="rear_camera_controller" filename="libgazebo_ros_camera.so">
+      <ros>
+        <remapping>image_raw:=/rear_camera/image_raw</remapping>
+        <remapping>camera_info:=/rear_camera/camera_info</remapping>
+      </ros>
+      <frame_name>rear_camera_link_optical</frame_name>
+      <hack_baseline>0.07</hack_baseline>
+    </plugin>
+  </sensor>
+</gazebo>
 
   <link name="rear_left_wheel">
     <inertial>
