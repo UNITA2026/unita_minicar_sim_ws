@@ -83,9 +83,9 @@ class Yolov8VisualizerNode(LifecycleNode):
 
         # subs
         self.image_sub = message_filters.Subscriber(
-            self, Image, "camera/image_raw", qos_profile=self.image_qos_profile)
+            self, Image, "/camera1/image_raw", qos_profile=self.image_qos_profile)
         self.detections_sub = message_filters.Subscriber(
-            self, DetectionArray, "detections", qos_profile=10)
+            self, DetectionArray, "/detections", qos_profile=10)
 
         self._synchronizer = message_filters.ApproximateTimeSynchronizer(
             (self.image_sub, self.detections_sub), 10, 0.5)
