@@ -13,8 +13,8 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='hhk',
-    maintainer_email='whaihong@g.skku.edu',
+    maintainer='young',
+    maintainer_email='imsunghy@gmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
@@ -22,10 +22,10 @@ setup(
         'console_scripts': [
             'image_publisher_node = camera_perception_pkg.image_publisher_node:main',
             'yolov8_node = camera_perception_pkg.yolov8_node:main',
-            'traffic_light_detector_node = camera_perception_pkg.traffic_light_detector_node:main',
             'lane_info_extractor_node = camera_perception_pkg.lane_info_extractor_node:main',
             'box_lidar_match_node = camera_perception_pkg.box_lidar_match_node:main',
-            'image_fusion_node = camera_perception_pkg.image_fusion_node:main',
+            'parking_perception_node = camera_perception_pkg.parking_perception_node:main',
+            'bev_rear_node = camera_perception_pkg.bev_rear_node:main'
         ],
     },
 )
