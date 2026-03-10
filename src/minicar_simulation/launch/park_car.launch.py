@@ -55,7 +55,7 @@ def generate_launch_description():
         output='screen',
         parameters=[{
                 'enable_lane': False,   # 차선 인식 끄기
-                'enablecone': True,    # 꼬깔 인식 켜기
+                'enable_cone': True,    # 꼬깔 인식 켜기
         }],
         remappings=[
                 ('camera1/image_raw', '/rear_camera/image_raw') 
